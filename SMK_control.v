@@ -224,7 +224,7 @@ module SMK_control(
 	Robot_Speed speed_l2 (.iClk(FPGA_CLK1_50),.iRst_n(RESET_N),.iKey(KEY[1:0]),.iSW(SW[1:0]),.iAngle(iAngle_l2),.oAngle(oAngle_l2),.flag(flag[1]));
 	Robot_Speed speed_l3 (.iClk(FPGA_CLK1_50),.iRst_n(RESET_N),.iKey(KEY[1:0]),.iSW(SW[1:0]),.iAngle(iAngle_l3),.oAngle(oAngle_l3),.flag(flag[2]));
 	Robot_Speed speed_r1 (.iClk(FPGA_CLK1_50),.iRst_n(RESET_N),.iKey(KEY[1:0]),.iSW(SW[1:0]),.iAngle(iAngle_r1),.oAngle(oAngle_r1),.flag(flag[3]));
-	Robot_Speed speed_r2 (.iClk(FPGA_CLK1_50),.iRst_n(RESET_N),.iKey(KEY[1:0]),.iSW(SW[1:0]),.iAngle(iAngle_r3),.oAngle(oAngle_r2),.flag(flag[4]));
+	Robot_Speed speed_r2 (.iClk(FPGA_CLK1_50),.iRst_n(RESET_N),.iKey(KEY[1:0]),.iSW(SW[1:0]),.iAngle(iAngle_r2),.oAngle(oAngle_r2),.flag(flag[4]));
 	Robot_Speed speed_r3 (.iClk(FPGA_CLK1_50),.iRst_n(RESET_N),.iKey(KEY[1:0]),.iSW(SW[1:0]),.iAngle(iAngle_r3),.oAngle(oAngle_r3),.flag(flag[5]));
 	
 	PWM_Generator pwm_l1(.clk(FPGA_CLK1_50),.reset_n(RESET_N),.high_dur (PwmAngle_l1),.total_dur(`DUR_CLOCK_NUM),.PWM(Pwm_l1));
