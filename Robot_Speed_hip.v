@@ -1,10 +1,11 @@
-module Robot_Speed(
+module Robot_Speed_hip(
 
 	input iClk,
 	input iRst_n,
 	input [1:0] iKey,
 	input [1:0] iSW,
 	input [7:0] iAngle,
+	input [7:0] angle,
 	output reg [7:0] oAngle,
 	output reg flag
 	);
@@ -31,10 +32,10 @@ module Robot_Speed(
 		else
 		begin
 		
-			if (iAngle > oAngle)
+			if (iAngle > angle)
 			begin
 				flag <= 0;
-				if (count[21] & (oAngle != iAngle))
+				if (count[21] & (angle != iAngle))
 				begin
 					count <= 0;
 					oAngle <= oAngle + `AdjAngle;
@@ -43,10 +44,10 @@ module Robot_Speed(
 					count <= count + iSW + 1;
 			end
 				
-			else if (iAngle < oAngle)
+			else if (iAngle < angle)
 			begin
 				flag <= 0;
-				if (count[21] & (oAngle != iAngle))
+				if (count[21] & (angle != iAngle))
 				begin
 					count <= 0;
 					oAngle <= oAngle - `AdjAngle;

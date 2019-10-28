@@ -4,6 +4,7 @@
 //=======================================================
 
 module DE10_NANO_Bluetooth_Slave(
+	input  [63:0] angle,
 
 	//////////// ADC //////////
 //	output		          		ADC_CONVST,
@@ -89,6 +90,8 @@ wire	         rdempty;
 wire	         write;
 reg	     	   read;
 reg	         cnt;
+wire    [7:0]  upload_reg;
+reg    [7:0]  angle_test;
 //=======================================================
 //  Structural coding
 //=======================================================
@@ -106,7 +109,7 @@ uart_control UART0(
 	.reset_n(KEY),
 	// tx
 	.write(write),
-	.writedata(uart_data),
+	.writedata(upload_reg),
 	//.writedata(test_cnt >> 6),
 
 	// rx
@@ -128,14 +131,36 @@ begin
   else
 		read <= 0;
 end
-assign  write = ( read & (~rdempty) );
+
+reg [25:0] cnt1;
+reg clk_slow = 0;
+reg [2:0] num = 0;
+always @ (posedge FPGA_CLK1_50)
+begin
+	cnt1 <= cnt1 + 1;
+	//angle_test  <= angle[7:0];
+	if (cnt1[25:3] == 23'b1)
+	begin
+		clk_slow <= 1;
+		angle_test <=  angle >> 8 *num;
+		num <= num + 1'd1;
+	end
+	else
+		clk_slow <= 0;
+end
+
+
+
+assign upload_reg = angle_test;
+assign write = clk_slow;
+//assign  write = ( read & (~rdempty) );
 
 always@(posedge FPGA_CLK1_50 or negedge KEY)
 begin
   
   if(!KEY)
     LED <= 0;
-  else if(KEY & write)
+  else if(KEY)
   begin
     case(uart_data)
 		10'h30:LED <= 4'b0000;
